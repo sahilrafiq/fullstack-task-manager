@@ -4,8 +4,9 @@ A complete full-stack web application with authentication, task management, sear
 
 ## 🚀 Live Demo
 
-- **Frontend:** [Will be deployed]
-- **Backend API:** [Will be deployed]
+- **GitHub Repository:** [https://github.com/sahilrafiq/fullstack-task-manager](https://github.com/sahilrafiq/fullstack-task-manager)
+- **Frontend:** [Can be deployed to Vercel/Netlify]
+- **Backend API:** [Can be deployed to Heroku/Railway]
 
 ## 📸 Screenshots
 
