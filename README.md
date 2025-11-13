@@ -363,12 +363,6 @@ fullstack-task-manager/
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## 🙏 Acknowledgments
-
-- Assignment provided by Primetrade.ai
-- Built as part of Frontend Developer Internship application
-- Completed in 3 days as per requirement
-
 ---
 
 **Built with ❤️ using MERN Stack**
