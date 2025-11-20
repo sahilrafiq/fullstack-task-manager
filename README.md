@@ -1,12 +1,14 @@
 # Full-Stack Task Manager
 
-A complete full-stack web application with authentication, task management, search, and filtering capabilities.
+A complete full-stack web application with authentication, task management, search, and filtering capabilities built with the MERN stack.
 
 ## 🚀 Live Demo
 
+- **Live Application:** [https://heartfelt-marshmallow-dfbdc7.netlify.app](https://heartfelt-marshmallow-dfbdc7.netlify.app)
+- **Backend API:** [https://task-manager-api-jq3i.onrender.com](https://task-manager-api-jq3i.onrender.com)
 - **GitHub Repository:** [https://github.com/sahilrafiq/fullstack-task-manager](https://github.com/sahilrafiq/fullstack-task-manager)
-- **Frontend:** [Can be deployed to Vercel/Netlify]
-- **Backend API:** [Can be deployed to Heroku/Railway]
+
+> **Note:** The backend is hosted on Render's free tier, which may spin down after periods of inactivity. The first request after inactivity may take 30-60 seconds to respond.
 
 ## 📸 Screenshots
 
@@ -54,16 +56,18 @@ A complete full-stack web application with authentication, task management, sear
 - **React Router v6** - Client-side routing
 - **Axios** - HTTP client
 - **CSS3** - Styling (responsive design)
+- **Netlify** - Hosting platform
 
 ### Backend
 - **Node.js** - Runtime environment
 - **Express.js** - Web framework
-- **MongoDB** - NoSQL database
+- **MongoDB Atlas** - Cloud database
 - **Mongoose** - ODM for MongoDB
 - **JWT** - Authentication tokens
 - **Bcrypt** - Password hashing
 - **Express Validator** - Input validation
 - **CORS** - Cross-origin resource sharing
+- **Render** - Hosting platform
 
 ## 📦 Installation & Setup
 
@@ -87,10 +91,11 @@ cd backend
 # Install dependencies
 npm install
 
-# Create .env file
-# Add the following variables:
+# Create .env file with the following variables:
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/taskmanager
+# For MongoDB Atlas use:
+# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/taskmanager?retryWrites=true&w=majority
 JWT_SECRET=your_super_secret_jwt_key_change_in_production
 NODE_ENV=development
 
@@ -108,6 +113,9 @@ cd frontend
 # Install dependencies
 npm install
 
+# Create .env file (optional for local development):
+REACT_APP_API_URL=http://localhost:5000/api
+
 # Start frontend
 npm start
 ```
@@ -120,11 +128,45 @@ Frontend will run on `http://localhost:3000`
 - Download and install MongoDB Community Edition
 - MongoDB will run on `mongodb://localhost:27017`
 
-**Option B: MongoDB Atlas (Cloud)**
+**Option B: MongoDB Atlas (Cloud) - Recommended**
 1. Create account at [mongodb.com/cloud/atlas](https://mongodb.com/cloud/atlas)
-2. Create a free cluster
-3. Get connection string
-4. Update `MONGODB_URI` in backend `.env`
+2. Create a free M0 cluster
+3. Create a database user with username and password
+4. Whitelist IP addresses (0.0.0.0/0 for development)
+5. Get connection string from "Connect" → "Connect your application"
+6. Update `MONGODB_URI` in backend `.env`
+
+## 🚀 Deployment
+
+### Deploy Backend to Render
+
+1. Create account on [render.com](https://render.com)
+2. Click "New +" → "Web Service"
+3. Connect your GitHub repository
+4. Configure:
+   - **Name:** `task-manager-api`
+   - **Root Directory:** `backend`
+   - **Environment:** Node
+   - **Build Command:** `npm install`
+   - **Start Command:** `node src/server.js`
+5. Add environment variables:
+   - `MONGODB_URI` - Your MongoDB Atlas connection string
+   - `JWT_SECRET` - Your secret key
+   - `NODE_ENV` - `production`
+6. Deploy!
+
+### Deploy Frontend to Netlify
+
+1. Create account on [netlify.com](https://netlify.com)
+2. Click "Add new site" → "Import an existing project"
+3. Connect GitHub and select your repository
+4. Configure:
+   - **Base directory:** `frontend`
+   - **Build command:** `npm run build`
+   - **Publish directory:** `frontend/build`
+5. Add environment variable:
+   - `REACT_APP_API_URL` - Your Render backend URL + `/api`
+6. Deploy!
 
 ## 🔗 API Endpoints
 
@@ -184,62 +226,6 @@ GET /api/tasks?status=pending&priority=high&search=meeting&sortBy=dueDate&order=
 - ✅ Clean code practices
 - ✅ Consistent naming conventions
 
-## 🚀 Scalability Considerations
-
-### Current Architecture
-- Monolithic backend with clear separation of concerns
-- Component-based frontend architecture
-- MongoDB for flexible schema design
-
-### Future Enhancements for Production Scale
-
-1. **Backend Scalability**
-   - Implement Redis for session management and caching
-   - Use PM2 or Docker for process management
-   - Add rate limiting (express-rate-limit)
-   - Implement API versioning
-   - Add request/response compression (gzip)
-   - Set up load balancing (Nginx/AWS ELB)
-
-2. **Database Optimization**
-   - Add database indexing for frequently queried fields
-   - Implement connection pooling
-   - Use MongoDB replica sets for high availability
-   - Add database query optimization
-   - Consider sharding for horizontal scaling
-
-3. **Frontend Optimization**
-   - Code splitting with React.lazy()
-   - Implement service workers for offline support
-   - Add state management (Redux/Zustand) for complex state
-   - Use React.memo() for expensive components
-   - Implement virtual scrolling for large lists
-   - Add CDN for static assets
-
-4. **Security Enhancements**
-   - Implement refresh token rotation
-   - Add rate limiting per user
-   - Set up WAF (Web Application Firewall)
-   - Implement CSP (Content Security Policy)
-   - Add security headers (Helmet.js)
-   - Set up intrusion detection
-
-5. **DevOps & Monitoring**
-   - CI/CD pipeline (GitHub Actions/Jenkins)
-   - Containerization with Docker
-   - Kubernetes for orchestration
-   - Logging (Winston/Morgan)
-   - Monitoring (Prometheus/Grafana)
-   - Error tracking (Sentry)
-   - Performance monitoring (New Relic)
-
-6. **Microservices Architecture (Future)**
-   - Split auth service
-   - Separate task service
-   - API Gateway (Kong/AWS API Gateway)
-   - Message queue (RabbitMQ/Kafka)
-   - Event-driven architecture
-
 ## 📁 Project Structure
 ```
 fullstack-task-manager/
@@ -293,6 +279,7 @@ fullstack-task-manager/
 │   │   ├── App.js
 │   │   ├── index.css
 │   │   └── index.js
+│   ├── netlify.toml
 │   ├── .gitignore
 │   ├── package.json
 │   └── README.md
@@ -306,37 +293,37 @@ fullstack-task-manager/
 ### Manual Testing Checklist
 
 **Authentication:**
-- [ ] User can register with valid credentials
-- [ ] Duplicate email shows error
-- [ ] User can login with correct credentials
-- [ ] Wrong password shows error
-- [ ] Token persists after page refresh
-- [ ] Logout clears token
+- ✅ User can register with valid credentials
+- ✅ Duplicate email shows error
+- ✅ User can login with correct credentials
+- ✅ Wrong password shows error
+- ✅ Token persists after page refresh
+- ✅ Logout clears token
 
 **Task Management:**
-- [ ] User can create new task
-- [ ] User can edit existing task
-- [ ] User can delete task
-- [ ] User can change task status
-- [ ] User can set task priority
-- [ ] Due dates display correctly
+- ✅ User can create new task
+- ✅ User can edit existing task
+- ✅ User can delete task
+- ✅ User can change task status
+- ✅ User can set task priority
+- ✅ Due dates display correctly
 
 **Search & Filter:**
-- [ ] Search finds tasks by title
-- [ ] Status filter works correctly
-- [ ] Priority filter works correctly
-- [ ] Multiple filters work together
-- [ ] Clear filters resets all filters
+- ✅ Search finds tasks by title
+- ✅ Status filter works correctly
+- ✅ Priority filter works correctly
+- ✅ Multiple filters work together
+- ✅ Clear filters resets all filters
 
 **Profile:**
-- [ ] User can view profile
-- [ ] User can update name and bio
-- [ ] Profile changes persist
-- [ ] Email is read-only
+- ✅ User can view profile
+- ✅ User can update name and bio
+- ✅ Profile changes persist
+- ✅ Email is read-only
 
 ## 🐛 Known Issues
 
-- None currently
+- Backend cold start on Render free tier may take 30-60 seconds on first request after inactivity
 
 ## 🔄 Future Improvements
 
@@ -353,6 +340,55 @@ fullstack-task-manager/
 - [ ] Notifications
 - [ ] Calendar view
 
+## 🚀 Scalability Considerations
+
+### Current Architecture
+- Monolithic backend with clear separation of concerns
+- Component-based frontend architecture
+- MongoDB Atlas for cloud database with built-in scalability
+
+### Future Enhancements for Production Scale
+
+1. **Backend Scalability**
+   - Implement Redis for session management and caching
+   - Use PM2 or Docker for process management
+   - Add rate limiting (express-rate-limit)
+   - Implement API versioning
+   - Add request/response compression (gzip)
+   - Set up load balancing (Nginx/AWS ELB)
+
+2. **Database Optimization**
+   - Add database indexing for frequently queried fields
+   - Implement connection pooling
+   - Use MongoDB replica sets for high availability
+   - Add database query optimization
+   - Consider sharding for horizontal scaling
+
+3. **Frontend Optimization**
+   - Code splitting with React.lazy()
+   - Implement service workers for offline support
+   - Add state management (Redux/Zustand) for complex state
+   - Use React.memo() for expensive components
+   - Implement virtual scrolling for large lists
+   - Add CDN for static assets
+
+4. **Security Enhancements**
+   - Implement refresh token rotation
+   - Add rate limiting per user
+   - Set up WAF (Web Application Firewall)
+   - Implement CSP (Content Security Policy)
+   - Add security headers (Helmet.js)
+   - Set up intrusion detection
+
+5. **DevOps & Monitoring**
+   - CI/CD pipeline (GitHub Actions)
+   - Containerization with Docker
+   - Kubernetes for orchestration
+   - Logging (Winston/Morgan)
+   - Monitoring (Prometheus/Grafana)
+   - Error tracking (Sentry)
+   - Performance monitoring (New Relic)
+
 ## 👤 Author
 
 **Sahil Rafiq**
@@ -364,6 +400,6 @@ fullstack-task-manager/
 
 This project is open source and available under the [MIT License](LICENSE).
 
----
-
 **Built with ❤️ using MERN Stack**
+
+**Tech Stack:** MongoDB Atlas | Express.js | React 18 | Node.js | Render | Netlify
