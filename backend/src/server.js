@@ -23,7 +23,7 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
-app.use(express.urlendoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // Request logging (development)
 if (process.env.NODE_ENV === 'development') {
