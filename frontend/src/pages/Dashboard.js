@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { taskAPI } from '../services/api';
 import Navbar from '../components/layout/Navbar';
@@ -20,12 +20,7 @@ const Dashboard = () => {
     search: '',
   });
 
-  useEffect(() => {
-    fetchTasks();
-    fetchStats();
-  }, [filters]);
-
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     try {
       setLoading(true);
       const response = await taskAPI.getTasks(filters);
@@ -35,16 +30,21 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
 
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     try {
       const response = await taskAPI.getTaskStats();
       setStats(response.data.stats);
     } catch (error) {
       console.error('Error fetching stats:', error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchTasks();
+    fetchStats();
+  }, [fetchTasks, fetchStats]);
 
   const handleCreateTask = () => {
     setEditingTask(null);
