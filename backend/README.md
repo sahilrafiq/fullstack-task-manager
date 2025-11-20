@@ -58,7 +58,7 @@ npm install
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/taskmanager
 # For MongoDB Atlas use:
-# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/taskmanager?retryWrites=true&w=majority
+# MONGODB_URI=mongodb+srv://your_username:your_password@your_cluster.mongodb.net/taskmanager?retryWrites=true&w=majority
 JWT_SECRET=your_super_secret_jwt_key_change_in_production
 NODE_ENV=development
 
@@ -93,7 +93,7 @@ The API will run on `http://localhost:5000`
 
 4. **Add Environment Variables**
    ```
-   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/taskmanager?retryWrites=true&w=majority
+   MONGODB_URI=mongodb+srv://your_username:your_password@your_cluster.mongodb.net/taskmanager?retryWrites=true&w=majority
    JWT_SECRET=your_super_secret_jwt_key_change_in_production
    NODE_ENV=production
    ```
