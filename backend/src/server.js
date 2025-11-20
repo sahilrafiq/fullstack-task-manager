@@ -15,8 +15,6 @@ const app = express();
 connectDB();
 
 // Middleware
-const cors = require('cors');
-
 app.use(cors({
   origin: [
     'http://localhost:3000',
@@ -25,7 +23,7 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlendoded({ extended: true }));
 
 // Request logging (development)
 if (process.env.NODE_ENV === 'development') {
